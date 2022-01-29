@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"gorm.io/driver/mysql"
 )
 
@@ -17,7 +18,9 @@ var (
 
 func InitDB() error {
 	var err error
-	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 	if err != nil {
 		return fmt.Errorf("open mysql connection failed: %w", err)
 	}
