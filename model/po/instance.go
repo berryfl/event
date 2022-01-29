@@ -43,3 +43,11 @@ func QueryNew(db *gorm.DB) ([]*Instance, error) {
 	}
 	return instances, nil
 }
+
+func DeleteCreated(db *gorm.DB) error {
+	result := db.Where(&Instance{Stage: "CREATED"}).Delete(&Instance{})
+	if result.Error != nil {
+		return fmt.Errorf("delete created instances failed: %w", result.Error)
+	}
+	return nil
+}
