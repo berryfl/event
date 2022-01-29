@@ -26,3 +26,20 @@ func (inst *Instance) Create(db *gorm.DB) error {
 	}
 	return nil
 }
+
+func (inst *Instance) Save(db *gorm.DB) error {
+	result := db.Save(inst)
+	if result.Error != nil {
+		return fmt.Errorf("save instance failed: %w", result.Error)
+	}
+	return nil
+}
+
+func QueryNew(db *gorm.DB) ([]*Instance, error) {
+	var instances []*Instance
+	result := db.Where(&Instance{Stage: "NEW"}).Find(&instances)
+	if result.Error != nil {
+		return nil, fmt.Errorf("query stage new instances failed: %w", result.Error)
+	}
+	return instances, nil
+}
