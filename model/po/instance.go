@@ -7,9 +7,12 @@ import (
 )
 
 type Instance struct {
-	gorm.Model
-	UUID  string `gorm:"uuid"`
-	Stage string `gorm:"stage"`
+	ID        uint64
+	CreatedAt int64  `gorm:"created_at"`
+	UpdatedAt int64  `gorm:"updated_at"`
+	DeletedAt int64  `gorm:"deleted_at"`
+	UUID      string `gorm:"uuid"`
+	Stage     string `gorm:"stage"`
 }
 
 func (inst *Instance) TableName() string {
