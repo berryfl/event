@@ -12,6 +12,10 @@ type Instance struct {
 	Stage string `gorm:"stage"`
 }
 
+func (inst *Instance) TableName() string {
+	return "instance_tab"
+}
+
 func (inst *Instance) Create(db *gorm.DB) error {
 	result := db.Create(inst)
 	if result.Error != nil {
