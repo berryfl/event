@@ -5,9 +5,9 @@ import (
 )
 
 const (
-	addr     = "localhost:6379"
-	password = ""
-	db       = 0
+	redisAddr     = "localhost:6379"
+	redisPassword = ""
+	redisDB       = 0
 )
 
 var (
@@ -16,9 +16,9 @@ var (
 
 func InitRedis() {
 	rdb = redis.NewClient(&redis.Options{
-		Addr:     addr,
-		Password: password,
-		DB:       db,
+		Addr:     redisAddr,
+		Password: redisPassword,
+		DB:       redisDB,
 	})
 }
 
