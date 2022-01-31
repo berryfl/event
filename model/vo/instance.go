@@ -22,6 +22,15 @@ func FromPoInstance(poInst *po.Instance) *Instance {
 	}
 }
 
+func (inst *Instance) ToPoInstance() *po.Instance {
+	return &po.Instance{
+		CreatedAt: inst.CreatedAt,
+		UpdatedAt: inst.UpdatedAt,
+		UUID:      inst.UUID,
+		Stage:     inst.Stage,
+	}
+}
+
 func FromJSONInstance(data []byte) (*Instance, error) {
 	var inst Instance
 	if err := json.Unmarshal(&inst); err != nil {
