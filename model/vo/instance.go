@@ -24,10 +24,8 @@ func FromPoInstance(poInst *po.Instance) *Instance {
 
 func (inst *Instance) ToPoInstance() *po.Instance {
 	return &po.Instance{
-		CreatedAt: inst.CreatedAt,
-		UpdatedAt: inst.UpdatedAt,
-		UUID:      inst.UUID,
-		Stage:     inst.Stage,
+		UUID:  inst.UUID,
+		Stage: inst.Stage,
 	}
 }
 
