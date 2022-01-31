@@ -36,6 +36,14 @@ func (inst *Instance) Save(db *gorm.DB) error {
 	return nil
 }
 
+func (inst *Instance) UpdateStage(db *gorm.DB) error {
+	result := db.Model(&Instance{}).Where("uuid = ?", inst.UUID).Update("stage", inst.Stage)
+	if result.Error != nil {
+		return fmt.Errorf("update instance stage failed: %w", result.Error)
+	}
+	return nil
+}
+
 func QueryNew(db *gorm.DB) ([]*Instance, error) {
 	var instances []*Instance
 	result := db.Where(&Instance{Stage: "NEW"}).Find(&instances)
