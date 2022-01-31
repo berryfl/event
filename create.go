@@ -1,8 +1,9 @@
 package main
 
 import (
+	"github.com/berryfl/event/internal/instance"
 	"github.com/berryfl/event/internal/helper"
-	"github.com/berryfl/event/model/po"
+	"github.com/berryfl/event/model/vo"
 	"github.com/google/uuid"
 )
 
@@ -10,28 +11,28 @@ func main() {
 	if err := helper.InitDB(); err != nil {
 		panic(err)
 	}
+	helper.InitRedis()
 
-	inst1 := &po.Instance{
+	inst1 := &vo.Instance{
 		UUID:  uuid.New().String(),
 		Stage: "NEW",
 	}
-	inst2 := &po.Instance{
+	inst2 := &vo.Instance{
 		UUID:  uuid.New().String(),
 		Stage: "NEW",
 	}
-	inst3 := &po.Instance{
+	inst3 := &vo.Instance{
 		UUID:  uuid.New().String(),
 		Stage: "NEW",
 	}
 
-	db := helper.GetDB()
-	if err := inst1.Create(db); err != nil {
+	if err := instance.CreateInstance(inst1); err != nil {
 		panic(err)
 	}
-	if err := inst2.Create(db); err != nil {
+	if err := instance.CreateInstance(inst2); err != nil {
 		panic(err)
 	}
-	if err := inst3.Create(db); err != nil {
+	if err := instance.CreateInstance(inst3); err != nil {
 		panic(err)
 	}
 }

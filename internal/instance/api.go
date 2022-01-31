@@ -4,8 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/berryfl/internal/helper"
-	"github.com/berryfl/event/model/po"
+	"github.com/berryfl/event/internal/helper"
 	"github.com/berryfl/event/model/vo"
 )
 

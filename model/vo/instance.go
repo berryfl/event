@@ -2,6 +2,7 @@ package vo
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/berryfl/event/model/po"
 )
@@ -31,13 +32,13 @@ func (inst *Instance) ToPoInstance() *po.Instance {
 
 func FromJSONInstance(data []byte) (*Instance, error) {
 	var inst Instance
-	if err := json.Unmarshal(&inst); err != nil {
+	if err := json.Unmarshal(data, &inst); err != nil {
 		return nil, fmt.Errorf("deserialize instance failed: %w", err)
 	}
 	return &inst, nil
 }
 
-func (inst *Instace) Serialize() ([]byte, error) {
+func (inst *Instance) Serialize() ([]byte, error) {
 	result, err := json.Marshal(inst)
 	if err != nil {
 		return nil, fmt.Errorf("serialize instance failed: %w", err)
