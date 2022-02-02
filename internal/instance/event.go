@@ -2,11 +2,13 @@ package instance
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
 	"github.com/berryfl/event/internal/helper"
 	"github.com/berryfl/event/model/vo"
+	"github.com/bsm/redislock"
 )
 
 const (
@@ -48,6 +50,20 @@ func HandleNewInstanceList(values []string) error {
 
 func HandleNewInstance(inst *vo.Instance) error {
 	db := helper.GetDB()
+
+	rdb := helper.GetRedis()
+	locker := redislock.New(rdb)
+	key := helper.GetLockKey(inst.UUID)
+	ttl := 15 * time.Second
+	lock, err := locker.Obtain(context.Background(), key, ttl, nil)
+	if err != nil {
+		if errors.Is(err, redislock.ErrNotObtained) {
+			fmt.Printf("cannot obtain lock for new instance: %s\n", inst.UUID)
+			return nil
+		}
+		return fmt.Errorf("handle new instance failed: %w", err)
+	}
+	defer lock.Release(context.Background())
 
 	fmt.Printf("simulating work to handle new instance: %s\n", inst.UUID)
 	inst.Stage = "CREATED"

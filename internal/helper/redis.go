@@ -1,6 +1,8 @@
 package helper
 
 import (
+	"fmt"
+
 	"github.com/go-redis/redis/v8"
 )
 
@@ -24,4 +26,8 @@ func InitRedis() {
 
 func GetRedis() *redis.Client {
 	return rdb
+}
+
+func GetLockKey(uuid string) string {
+	return fmt.Sprintf("/lock/%s", uuid)
 }
